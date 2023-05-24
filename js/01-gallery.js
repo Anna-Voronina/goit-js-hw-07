@@ -41,18 +41,23 @@ function createGalleryImageModal({ src, alt }) {
     `<img
         src="${src}"
         alt="${alt}"
-      />`
+      />`,
+    {
+      onShow: () => {
+        window.addEventListener("keydown", onEscKeyDown);
+      },
+
+      onClose: () => {
+        window.removeEventListener("keydown", onEscKeyDown);
+      },
+    }
   );
 
-  galleryImageModal.show(() => {
-    window.addEventListener("keydown", onEscKeyDown);
-  });
+  galleryImageModal.show();
 
   function onEscKeyDown(event) {
     if (event.code === "Escape") {
-      galleryImageModal.close(() => {
-        window.removeEventListener("keydown", onEscKeyDown);
-      });
+      galleryImageModal.close();
     }
   }
 }
